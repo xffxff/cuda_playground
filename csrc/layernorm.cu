@@ -89,8 +89,9 @@ at::Tensor layernorm_forward_cuda(const at::Tensor& inp, const at::Tensor& weigh
     float* mean_ptr = mean.data_ptr<float>();
     float* rstd_ptr = rstd.data_ptr<float>();
 
-    int blocks = (N + 31) / 32;  // Assuming 32 threads per block for simplicity
-    layernorm_forward_kernel3<<<blocks, 32>>>(out_ptr, mean_ptr, rstd_ptr, inp_ptr, weight_ptr, bias_ptr, N, C);
+    int block_size = 512;
+    int blocks = CEIL_DIV(N * 32, block_size);
+    layernorm_forward_kernel3<<<blocks, block_size>>>(out_ptr, mean_ptr, rstd_ptr, inp_ptr, weight_ptr, bias_ptr, N, C);
 
     return out;
 }
