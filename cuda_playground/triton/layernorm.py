@@ -4,6 +4,7 @@ import triton
 import triton.language as tl
 
 
+# copied from https://triton-lang.org/main/getting-started/tutorials/05-layer-norm.html#sphx-glr-getting-started-tutorials-05-layer-norm-py
 @triton.jit
 def _layer_norm_fwd_fused(
     X,  # pointer to the input

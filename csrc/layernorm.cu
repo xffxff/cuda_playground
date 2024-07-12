@@ -21,6 +21,7 @@ void cudaCheck(cudaError_t error, const char *file, int line) {
 
 namespace cg = cooperative_groups;
 
+// This kernel is copied from https://github.com/karpathy/llm.c/blob/bdb0fb5599349040765b04d94425a45379449f69/train_gpt2_fp32.cu#L116-L161
 __global__ void layernorm_forward_kernel3(float* __restrict__ out, float* __restrict__ mean, float* __restrict__ rstd,
                                     const float*  __restrict__ inp, const float*  __restrict__ weight,
                                     const float* __restrict__ bias, int N, int C) {
